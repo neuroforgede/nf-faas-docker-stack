@@ -78,7 +78,7 @@ services:
   faas-swarm:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
-    image: openfaas/faas-swarm:0.9.0
+    image: neuroforgede/faas-swarm:0.10.0
     networks:
       - functions
     environment:
@@ -87,6 +87,7 @@ services:
       DOCKER_API_VERSION: "1.30"
       basic_auth: "${BASIC_AUTH:-false}"
       secret_mount_path: "/run/secrets/"
+      DOCKER_CONFIG_PATH: /run/secrets/docker-config
     deploy:
       placement:
         constraints:
@@ -107,6 +108,8 @@ services:
         target: basic-auth-user
       - source: basic-auth-password
         target: basic-auth-password
+      - source: docker-config
+        target: docker-config
 
   nats:
     image: nats-streaming:0.25.2
@@ -240,3 +243,7 @@ secrets:
     file: ./secrets/basic-auth-user
   basic-auth-password:
     file: ./secrets/basic-auth-password
+
+  # probably you dont want to do this in production, do this more selectively
+  docker-config:
+    file: /home/martinb/.docker/config.json
