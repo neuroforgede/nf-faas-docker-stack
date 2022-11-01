@@ -238,6 +238,7 @@ networks:
     attachable: true
     labels:
       - "openfaas=true"
+      - "com.github.neuroforgede.nf-faas-docker.project=default"
 
 secrets:
   basic-auth-user:
