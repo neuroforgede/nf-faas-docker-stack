@@ -3,6 +3,7 @@ services:
   gateway:
     ports:
       - 8080:8080
+      # - 8082:8082
     image: ghcr.io/openfaas/gateway:0.25.3
     networks:
       - functions
