@@ -78,7 +78,7 @@ services:
   faas-swarm:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
-    image: neuroforgede/faas-swarm:0.10.0
+    image: neuroforgede/nf-faas-docker:0.10.0
     networks:
       - functions
     environment:
