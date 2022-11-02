@@ -1,0 +1,12 @@
+provider:
+    name: openfaas
+
+functions:
+  sample-func-with-secret:
+    lang: dockerfile
+    skip_build: true
+    image: functions/api-key-protected:latest
+    environment:
+      fprocess: cat /var/openfaas/secrets/my-secret
+    secrets:
+    - my-secret
