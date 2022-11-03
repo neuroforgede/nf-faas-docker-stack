@@ -13,6 +13,7 @@ Contributions welcome.
 # Showcase
 
 ![](./img/showcase.png)
+![](./img/showcase_services.png)
 
 # Status
 
