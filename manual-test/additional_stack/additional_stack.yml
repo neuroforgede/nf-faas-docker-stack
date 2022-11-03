@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  mock:
+    image: "bash"
+    command: "tail -f /dev/null"
+    networks:
+      - additional_network
+
+networks:
+  additional_network:
+    name: "additional_network"
+    driver: overlay
+    attachable: true
