@@ -1,5 +1,5 @@
 Proudly made by [NeuroForge](https://neuroforge.de/) in Bayreuth, Germany.
-# faas-stack
+# nf-faas-docker-stack
 
 Modernized Docker Stack sample deployment for OpenFaaS with resurrected support for Docker Swarm.
 
