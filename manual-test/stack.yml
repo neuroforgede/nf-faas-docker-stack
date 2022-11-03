@@ -8,5 +8,7 @@ functions:
     image: functions/api-key-protected:latest
     environment:
       fprocess: cat /var/openfaas/secrets/my-secret
+    annotations:
+      com.github.neuroforgede.nf-faas-docker.additionalNetworks: additional_network
     secrets:
     - my-secret
