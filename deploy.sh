@@ -14,4 +14,4 @@ else
   echo ""
 fi
 
-docker-sdp stack deploy func -c $composefile
+docker-sdp stack deploy faas -c faas.yml
