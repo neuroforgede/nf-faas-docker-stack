@@ -87,6 +87,7 @@ services:
       write_timeout: "5m5s" # set both here, and on your functions
       DOCKER_API_VERSION: "1.41"
       NF_FAAS_DOCKER_PROJECT: "default"
+      NF_FAAS_ALWAYS_RESOLVE_IMAGE: "true"
       basic_auth: "${BASIC_AUTH:-false}"
       secret_mount_path: "/run/secrets/"
       DOCKER_CONFIG_PATH: /run/secrets/docker-config
