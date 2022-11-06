@@ -225,13 +225,65 @@ services:
       - source: basic-auth-password
         target: basic-auth-password
 
+  grafana:
+    entrypoint: /custom_entrypoint.sh
+    image: grafana/grafana:9.1.6
+    healthcheck:
+      test: ["CMD", "wget", "--tries=1", "--spider", "--quiet", "http://localhost:3000/api/health"]
+      interval: 10s
+      timeout: 10s
+      retries: 2
+      start_period: 10s
+    ports:
+      - 9099:3000
+    user: root
+    networks:
+      - functions
+    environment:
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana:/var/lib/grafana
+    secrets:
+      - source: grafana_environment_sh
+        target: grafana_environment_sh
+    configs:
+      - source: grafana_openfaas_dash
+        target: /etc/grafana/dashboards/openfaas-dash.json
+
+      - source: grafana_dashboards
+        target: /etc/grafana/provisioning/dashboards/dashboards.yaml
+
+      - source: grafana_datasource_prometheus
+        target: /etc/grafana/provisioning/datasources/prometheus.yaml
+
+      - source: grafana_datasource_entrypoint
+        target: /custom_entrypoint.sh
+        mode: 0777
+    deploy:
+      mode: replicated
+      replicas: 1
+      resources:
+        limits:
+          memory: 1024M
+        reservations:
+          memory: 128M
+
 configs:
   prometheus_config:
-    file: ./prometheus/prometheus.yml
+    file: ./configs/prometheus/prometheus.yml
   prometheus_rules:
-    file: ./prometheus/alert.rules.yml
+    file: ./configs/prometheus/alert.rules.yml
   alertmanager_config:
-    file: ./prometheus/alertmanager.yml
+    file: ./configs/prometheus/alertmanager.yml
+
+  grafana_openfaas_dash:
+    file: ./configs/grafana/conf/dashboards/openfaas-dash.json
+  grafana_datasource_prometheus:
+    file: ./configs/grafana/conf/datasources/prometheus.yaml
+  grafana_dashboards:
+    file: ./configs/grafana/conf/dashboards.yaml
+  grafana_datasource_entrypoint:
+    file: ./configs/grafana/conf/docker-entrypoint.sh
 
 networks:
   functions:
@@ -250,3 +302,10 @@ secrets:
   # probably you dont want to do this in production, do this more selectively
   docker-config:
     file: /home/martinb/.docker/config.json
+
+  grafana_environment_sh:
+    file: ./secrets/grafana/environment.sh
+
+
+volumes:
+  grafana:

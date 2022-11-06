@@ -1,0 +1,3 @@
+export GF_SECURITY_ADMIN_USER=admin
+export GF_SECURITY_ADMIN_PASSWORD=admin
+# export GF_INSTALL_PLUGINS=grafana-piechart-panel
